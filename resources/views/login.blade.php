@@ -72,6 +72,7 @@
 		display: inline-block;
 		margin: 100px auto;
 	}
+
 </style>
 </head>
 <body>

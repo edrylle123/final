@@ -1,51 +1,42 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\TeacherLoad;
-
-
 class TeacherLoadsController extends Controller
 {
     public function index()
     {
-    	$teachersload = TeacheLoadr::all();
-    	return view('teacher-load.index')->with('teacher-load', $teachers);
+        $teacherloads = TeacherLoad::all();
+        return view('teacher-loads.index')->with('teacherloads', $teacherloads);
     }
     public function create()
     {
-    	$sections = Section::all();
-        return view('teacher-load.create',compact('sections'));
+        return view('teacher-loads.create');
     }
      public function store()
     {
         request()->validate([
-            'name' => 'required',
+            'subject_strand_id' => 'required',
+            'section_id' => 'required',
             
         ]);
         
-    	$teacher = new Teacher;
-    	$teacher->name = request()->name;
-    	$teacher->advisory_section = request()->advisory_section;
-    	$teacher->save();
-
-    	return redirect('/teachers');
+        $teacherload = new TeacherLoad;
+        $teacherload->subject_strand_id = request()->subject_strand_id;
+        $teacherload->section_id = request()->section_id;
+        $teacherload->save();
+        return redirect('/teacher-loads');
     }
     
    
-    public function edit(Teacher $teacher)
+    public function edit(TeacherLoad $teacherload)
     {
-        $sections = Section::all();
-        return view('teachers.edit',compact('sections','teacher'));
+        return view('teacher-loads.edit')->with('teacherload', $teacherload);
     }
-
-    public function update(Teacher $teacher)
+    public function update(Teacherload $teacherload)
     {
-        $teacher->name = request()->name;
-        $teacher->save();
-        return redirect('/teachers');
+        $teacherload->name = request()->name;
+        $teacherload->save();
+        return redirect('/teacher-loads');
     }
-
-
 }
